@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.special.ResideMenu.R;
 
 /**
@@ -39,6 +40,12 @@ public class ResideMenuItem extends LinearLayout{
         tv_title.setText(title);
     }
 
+    public ResideMenuItem(Context context, String title) {
+        super(context);
+        initViews(context);
+        tv_title.setText(title);
+    }
+    
     private void initViews(Context context){
         LayoutInflater inflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         inflater.inflate(R.layout.residemenu_item, this);

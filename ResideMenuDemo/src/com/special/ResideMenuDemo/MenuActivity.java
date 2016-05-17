@@ -14,10 +14,11 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
 
     private ResideMenu resideMenu;
     private MenuActivity mContext;
-    private ResideMenuItem itemHome;
-    private ResideMenuItem itemProfile;
-    private ResideMenuItem itemCalendar;
-    private ResideMenuItem itemSettings;
+    private ResideMenuItem mItemCamera;
+    private ResideMenuItem mItemMyLensFolders;
+    private ResideMenuItem mItemSharedWithMe;
+    private ResideMenuItem mItemSettings;
+    private ResideMenuItem mItemLogout;
 
     /**
      * Called when the activity is first created.
@@ -36,42 +37,38 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
 
         // attach to current activity;
         resideMenu = new ResideMenu(this);
-        resideMenu.setUse3D(true);
         resideMenu.setBackground(R.drawable.menu_background);
         resideMenu.attachToActivity(this);
         resideMenu.setMenuListener(menuListener);
         //valid scale factor is between 0.0f and 1.0f. leftmenu'width is 150dip. 
-        resideMenu.setScaleValue(0.6f);
-
+        resideMenu.setScaleValue(0.5f);
+        
         // create menu items;
-        itemHome     = new ResideMenuItem(this, R.drawable.icon_home,     "Home");
-        itemProfile  = new ResideMenuItem(this, R.drawable.icon_profile,  "Profile");
-        itemCalendar = new ResideMenuItem(this, R.drawable.icon_calendar, "Calendar");
-        itemSettings = new ResideMenuItem(this, R.drawable.icon_settings, "Settings");
+        mItemCamera     	= new ResideMenuItem(this, "CAMERA");
+        mItemMyLensFolders  = new ResideMenuItem(this, "MY LENS FOLDERS");
+        mItemSharedWithMe 	= new ResideMenuItem(this, R.drawable.icon_calendar, "SHARED WITH ME");
+        mItemSettings 		= new ResideMenuItem(this, "SETTINGS");
+        mItemLogout 		= new ResideMenuItem(this, "LOGOUT");
+        
+        mItemCamera.setOnClickListener(this);
+        mItemMyLensFolders.setOnClickListener(this);
+        mItemSharedWithMe.setOnClickListener(this);
+        mItemSettings.setOnClickListener(this);
+        mItemLogout.setOnClickListener(this);
 
-        itemHome.setOnClickListener(this);
-        itemProfile.setOnClickListener(this);
-        itemCalendar.setOnClickListener(this);
-        itemSettings.setOnClickListener(this);
-
-        resideMenu.addMenuItem(itemHome, ResideMenu.DIRECTION_LEFT);
-        resideMenu.addMenuItem(itemProfile, ResideMenu.DIRECTION_LEFT);
-        resideMenu.addMenuItem(itemCalendar, ResideMenu.DIRECTION_RIGHT);
-        resideMenu.addMenuItem(itemSettings, ResideMenu.DIRECTION_RIGHT);
+        resideMenu.addMenuItem(mItemCamera, ResideMenu.DIRECTION_LEFT);
+        resideMenu.addMenuItem(mItemMyLensFolders, ResideMenu.DIRECTION_LEFT);
+        resideMenu.addMenuItem(mItemSharedWithMe, ResideMenu.DIRECTION_LEFT);
+        resideMenu.addMenuItem(mItemSettings, ResideMenu.DIRECTION_LEFT);
+        resideMenu.addMenuItem(mItemLogout, ResideMenu.DIRECTION_LEFT);
 
         // You can disable a direction by setting ->
-        // resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
+        resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
 
         findViewById(R.id.title_bar_left_menu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
-            }
-        });
-        findViewById(R.id.title_bar_right_menu).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                resideMenu.openMenu(ResideMenu.DIRECTION_RIGHT);
             }
         });
     }
@@ -84,13 +81,15 @@ public class MenuActivity extends FragmentActivity implements View.OnClickListen
     @Override
     public void onClick(View view) {
 
-        if (view == itemHome){
+        if (view == mItemCamera){
             changeFragment(new HomeFragment());
-        }else if (view == itemProfile){
+        }else if (view == mItemMyLensFolders){
             changeFragment(new ProfileFragment());
-        }else if (view == itemCalendar){
+        }else if (view == mItemSharedWithMe){
             changeFragment(new CalendarFragment());
-        }else if (view == itemSettings){
+        }else if (view == mItemSettings){
+            changeFragment(new SettingsFragment());
+        }else if (view == mItemLogout){
             changeFragment(new SettingsFragment());
         }
 
